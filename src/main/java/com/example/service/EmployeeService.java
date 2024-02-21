@@ -19,6 +19,10 @@ import com.example.repository.EmployeeRepository;
 @Transactional
 public class EmployeeService {
 
+	public EmployeeService(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
+
 	@Autowired
 	private EmployeeRepository employeeRepository;
 
