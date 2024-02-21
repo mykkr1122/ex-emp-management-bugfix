@@ -86,18 +86,21 @@ public class AdministratorController {
 		String password=insertAdministratorForm.getPassword();
 		String confirmPassword=insertAdministratorForm.getConfirmPassword();
 
-		if (password.equals(confirmPassword)) {
+		//入力値にエラーがある場合、エラーメッセージを表示
+		if (insertBindingResult.hasErrors()) {
 			return "administrator/insert";
 		}
-
+		//メールアドレスが既に登録されている場合、エラーメッセージを表示
 		if (administratorService.findByMailAddress(mailAddress) !=null){
 			inserRedirectAttributes.addFlashAttribute("errorMessage", "このメールアドレスは既に登録されています");
 			return "redirect:/toInsert";
 		}
+		//パスワードと確認用パスワードが一致しない場合、エラーメッセージを表示
 		if (!password.equals(confirmPassword)) {
 			model.addAttribute("confirm_errorMessage", "パスワードが一致しません");
 			return "administrator/insert";
 		}
+
 		Administrator administrator = new Administrator();
 		// フォームからドメインにプロパティ値をコピー
 		BeanUtils.copyProperties(insertAdministratorForm, administrator);
@@ -133,12 +136,13 @@ public class AdministratorController {
 	,Model model) {
 		String mail=loginForm.getMailAddress();
 		String pass=loginForm.getPassword();
+
 		Administrator administrator = administratorService.login(mail, pass);
 		if (result.hasErrors() || administrator==null) {
+			//エラーメッセージが重複するためコメントアウト
 			// if (administrator==null) {
 			// 	redirectAttributes.addFlashAttribute("errorMessage", "メールアドレスまたはパスワードが不正です。");
 			// }
-			
 			return "administrator/login";
 		}
 		session.setAttribute("administratorName", administrator.getName());
@@ -168,7 +172,7 @@ public class AdministratorController {
 		System.out.println(10 / 0); 
 		System.out.println("例外発生後");
 
-		return "サンプル";
+		return "さんぷる";
 	}
 
 }

@@ -107,7 +107,9 @@ public class EmployeeController {
 	@GetMapping("/search")
 	public String search(String name, Model model) {
 		List<Employee> employeeList = new ArrayList<>();
+		// nameがnullまたは空文字の場合は全件検索を行う
 		if (name !=null && !name.equals("")) {
+			// 曖昧検索を行う
 			employeeList = employeeService.search(name);
 			if (employeeList.isEmpty()){
 				model.addAttribute("notExistError", "該当する従業員が存在しませんでした。");

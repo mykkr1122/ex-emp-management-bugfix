@@ -19,6 +19,9 @@ import com.example.repository.EmployeeRepository;
 @Transactional
 public class EmployeeService {
 
+	/*
+	 * JUnitでテストするためにリポジトリをフィールドに持つ
+	 */
 	public EmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }

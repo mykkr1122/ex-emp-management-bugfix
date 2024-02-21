@@ -24,24 +24,30 @@ public class EmployeeServiceTest {
         cal.set(2020,Calendar.DECEMBER,11);
         date=cal.getTime();
         
+        // モックオブジェクトの生成
         EmployeeRepository mockRepository=Mockito.mock(EmployeeRepository.class);
 
-        List<Employee> expected=
-        Arrays.asList(new Employee
+        // モックオブジェクトのメソッドの戻り値を設定
+        Employee expected=
+        new Employee
         (1,"サンプル太郎","e1.png","男性",date
         ,"sample@mail.com","000-0000","鳥取県鳥取市1-1-11","000-0000-0000"
-        ,400000,"社員として優秀です",1));
-        when(mockRepository.findAll()).thenReturn(expected);
+        ,400000,"社員として優秀です",1);
+        when(mockRepository.load(1)).thenReturn(expected);
 
+        // テスト対象のクラスを生成
         EmployeeService employeeService=new EmployeeService(mockRepository);
-        List<Employee> actual=employeeService.showList();
+        // テスト対象のメソッドを実行
+        Employee actual=employeeService.showDetail(1);
 
+        // 期待値と実際の値を比較
         assertEquals(expected, actual);
     }
 
  
     @Test
     void testShowList() {
+        
         Date date=new Date();
         Calendar cal=Calendar.getInstance();
         cal.set(2020,Calendar.DECEMBER,11);
@@ -52,7 +58,10 @@ public class EmployeeServiceTest {
         cal2.set(2023,Calendar.MAY,5);
         date2=cal2.getTime();
 
+        // モックオブジェクトの生成
         EmployeeRepository mockRepository=Mockito.mock(EmployeeRepository.class);
+
+        // モックオブジェクトのメソッドの戻り値を設定(2人分の従業員情報を返す)
         List<Employee> expected=Arrays.asList(new Employee
         (1,"サンプル太郎","e1.png","男性",date
         ,"sample@mail.com","000-0000","鳥取県鳥取市1-1-11","000-0000-0000"
@@ -63,9 +72,12 @@ public class EmployeeServiceTest {
         ,300000,"社員として優秀です",3));
         when(mockRepository.findAll()).thenReturn(expected);
         
+        // テスト対象のクラスを生成
         EmployeeService employeeService=new EmployeeService(mockRepository);
+        // テスト対象のメソッドを実行
         List<Employee> actual=employeeService.showList();
 
+        // 期待値と実際の値を比較
         assertEquals(expected, actual);
     }
 }
