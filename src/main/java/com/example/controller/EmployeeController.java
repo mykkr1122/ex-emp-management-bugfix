@@ -1,5 +1,6 @@
 package com.example.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,14 +106,17 @@ public class EmployeeController {
 	 */
 	@GetMapping("/search")
 	public String search(String name, Model model) {
-		List<Employee> employeeList = employeeService.search(name);
-		if (name=="") {
-			employeeList = employeeService.showList();
-		}else if (employeeList.get(0).getName() == null){
-			model.addAttribute("notExistError", "該当する従業員が存在しませんでした。");
+		List<Employee> employeeList = new ArrayList<>();
+		if (name !=null && !name.equals("")) {
+			employeeList = employeeService.search(name);
+			if (employeeList.isEmpty()){
+				model.addAttribute("notExistError", "該当する従業員が存在しませんでした。");
+				employeeList = employeeService.showList();
+			}
+		}else{
 			employeeList = employeeService.showList();
 		}
-		model.addAttribute("employeeNameList", employeeList);
-		return "redirect:/employee/showList";
+		model.addAttribute("employeeList", employeeList);
+		return "employee/list";
 	}
 }

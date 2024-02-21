@@ -88,8 +88,9 @@ public class EmployeeRepository {
 	 * 従業員名で曖昧検索を行うメソッド
 	 */
 	public List<Employee> findByName(String name) {
-		String sql = "SELECT id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics,dependents_count FROM employees WHERE name LIKE '%"+name+"%';";
-		List<Employee> employeeNameList = template.query(sql, EMPLOYEE_ROW_MAPPER);
+		String sql = "SELECT id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics,dependents_count FROM employees WHERE name LIKE :name;";
+		SqlParameterSource param = new MapSqlParameterSource().addValue("name", "%" + name + "%");
+		List<Employee> employeeNameList = template.query(sql,param, EMPLOYEE_ROW_MAPPER);
 		return employeeNameList;
 	}
 }
