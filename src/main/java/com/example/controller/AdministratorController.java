@@ -82,14 +82,27 @@ public class AdministratorController {
 	,BindingResult insertBindingResult
 	,RedirectAttributes inserRedirectAttributes
 	,Model model) {
-		if (insertBindingResult.hasErrors()) {
+		String mailAddress=insertAdministratorForm.getMailAddress();
+		String password=insertAdministratorForm.getPassword();
+		String confirmPassword=insertAdministratorForm.getConfirmPassword();
+
+		if (password.equals(confirmPassword)) {
+			return "administrator/insert";
+		}
+
+		if (administratorService.findByMailAddress(mailAddress) !=null){
+			inserRedirectAttributes.addFlashAttribute("errorMessage", "このメールアドレスは既に登録されています");
+			return "redirect:/toInsert";
+		}
+		if (!password.equals(confirmPassword)) {
+			model.addAttribute("confirm_errorMessage", "パスワードが一致しません");
 			return "administrator/insert";
 		}
 		Administrator administrator = new Administrator();
 		// フォームからドメインにプロパティ値をコピー
 		BeanUtils.copyProperties(insertAdministratorForm, administrator);
 		administratorService.insert(administrator);
-		return "administrator/login";
+		return "redirect:/";
 	}
 
 

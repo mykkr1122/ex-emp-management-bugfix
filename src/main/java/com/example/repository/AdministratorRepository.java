@@ -94,5 +94,4 @@ public class AdministratorRepository {
 		}
 		return administratorList.get(0);
 	}
-
 }

@@ -59,7 +59,7 @@
                 <div class="form-group" th:object="${loginForm}">
                   <!-- <p th:if="${errorMessage}" th:text="${name}"></p> -->
                   <label for="mailAddress">メールアドレス:</label>
-                  <span th:if="${#fields.hasErrors('mailAddress')}" th:errors="*{mailAddress}" class="error-messages">error</span>
+                  <span th:if="${#fields.hasErrors('mailAddress')}" th:errors="*{mailAddress}" class="alert alert-danger">error</span>
                   <input
                     type="text"
                     name="mailAddress"
@@ -72,7 +72,7 @@
                 </div>
                 <div class="form-group" th:object="${loginForm}">
                   <label for="inputPassword">パスワード:</label>
-                  <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-messages">error</p>
+                  <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}"class="alert alert-danger">error</p>
                   <input
                     type="password"
                     name="password"

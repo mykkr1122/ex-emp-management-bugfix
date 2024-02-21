@@ -80,7 +80,7 @@
                 <div class="form-group" th:object="${insertAdministratorForm}">
                   <div class="row">
                     <div class="col-sm-12">
-
+                      <p th:if="${errorMessage}" th:text="${errorMessage}"class="alert alert-danger"></p>
                       <label for="mailAddress"> メールアドレス: </label>
                       <label
                         th:errors="*{mailAddress}"
@@ -123,8 +123,31 @@
                         value="xxxxxxxx"
                       />
                     </div>
+                <!-- 確認用パスワード -->
+                <div class="form-group" th:object="${insertAdministratorForm}">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <label for="password"> 確認用パスワード: </label>
+                        <span
+                          th:if="${confirm_errorMessage}"
+                          th:text="${confirm_errorMessage}"
+                          class="error-messages"
+                        ></span>
+                      <input
+                        type="password"
+                        name="confirmation_password"
+                        id="password"
+                        class="form-control"
+                        placeholder="confirmation_password"
+                        th:field="*{confirmPassword}"
+                        th:errorclass="error-input"
+                        value="xxxxxxxx"
+                      />
+                    </div>
                   </div>
                 </div>
+                </div>
+              </div>
                 <!-- 登録ボタン -->
                 <div class="form-group">
                   <div class="row">
