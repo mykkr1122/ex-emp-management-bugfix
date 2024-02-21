@@ -159,14 +159,16 @@ public class AdministratorController {
 		return "redirect:/";
 	}
 
+	/*
+	 * 例外を発生させるメソッド
+	 */
 	@GetMapping("/exception")
 	public String throwsException() {
-		// 0で除算、非検査例外であるArithmeticExceptionが発生！
 		System.out.println("例外発生前");
-		System.out.println(10 / 0); // ←このタイミングでGlobalExceptionHandlerに処理が飛ぶ
+		System.out.println(10 / 0); 
 		System.out.println("例外発生後");
 
-		return "通常はここにHTML名を書くが、ここまで処理は来ない";
+		return "サンプル";
 	}
 
 }

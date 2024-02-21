@@ -50,7 +50,7 @@ public class EmployeeRepository {
 	 * @return 全従業員一覧 従業員が存在しない場合はサイズ0件の従業員一覧を返します
 	 */
 	public List<Employee> findAll() {
-		String sql = "SELECT id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics,dependents_count FROM employees ORDER BY hire_date";
+		String sql = "SELECT id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics,dependents_count FROM employees ORDER BY hire_date;";
 
 		List<Employee> developmentList = template.query(sql, EMPLOYEE_ROW_MAPPER);
 
@@ -65,7 +65,7 @@ public class EmployeeRepository {
 	 * @exception org.springframework.dao.DataAccessException 従業員が存在しない場合は例外を発生します
 	 */
 	public Employee load(Integer id) {
-		String sql = "SELECT id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics,dependents_count FROM employees WHERE id=:id";
+		String sql = "SELECT id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics,dependents_count FROM employees WHERE id=:id;";
 
 		SqlParameterSource param = new MapSqlParameterSource().addValue("id", id);
 
@@ -82,5 +82,14 @@ public class EmployeeRepository {
 
 		String updateSql = "UPDATE employees SET dependents_count=:dependentsCount WHERE id=:id";
 		template.update(updateSql, param);
+	}
+
+	/*
+	 * 従業員名で曖昧検索を行うメソッド
+	 */
+	public List<Employee> findByName(String name) {
+		String sql = "SELECT id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics,dependents_count FROM employees WHERE name LIKE '%"+name+"%';";
+		List<Employee> employeeNameList = template.query(sql, EMPLOYEE_ROW_MAPPER);
+		return employeeNameList;
 	}
 }
