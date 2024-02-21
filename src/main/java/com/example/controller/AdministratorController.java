@@ -82,14 +82,27 @@ public class AdministratorController {
 	,BindingResult insertBindingResult
 	,RedirectAttributes inserRedirectAttributes
 	,Model model) {
-		if (insertBindingResult.hasErrors()) {
+		String mailAddress=insertAdministratorForm.getMailAddress();
+		String password=insertAdministratorForm.getPassword();
+		String confirmPassword=insertAdministratorForm.getConfirmPassword();
+
+		if (password.equals(confirmPassword)) {
+			return "administrator/insert";
+		}
+
+		if (administratorService.findByMailAddress(mailAddress) !=null){
+			inserRedirectAttributes.addFlashAttribute("errorMessage", "このメールアドレスは既に登録されています");
+			return "redirect:/toInsert";
+		}
+		if (!password.equals(confirmPassword)) {
+			model.addAttribute("confirm_errorMessage", "パスワードが一致しません");
 			return "administrator/insert";
 		}
 		Administrator administrator = new Administrator();
 		// フォームからドメインにプロパティ値をコピー
 		BeanUtils.copyProperties(insertAdministratorForm, administrator);
 		administratorService.insert(administrator);
-		return "administrator/login";
+		return "redirect:/";
 	}
 
 
@@ -144,6 +157,18 @@ public class AdministratorController {
 	public String logout() {
 		session.invalidate();
 		return "redirect:/";
+	}
+
+	/*
+	 * 例外を発生させるメソッド
+	 */
+	@GetMapping("/exception")
+	public String throwsException() {
+		System.out.println("例外発生前");
+		System.out.println(10 / 0); 
+		System.out.println("例外発生後");
+
+		return "サンプル";
 	}
 
 }

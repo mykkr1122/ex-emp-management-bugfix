@@ -48,12 +48,12 @@
               th:action="@{/insert}"
               th:object="${insertAdministratorForm}"
             >
-              <fieldset>
+              <fieldset th:object="${insertAdministratorForm}">
                 <legend>
                   管理者登録<br />(システムにログインできる管理者を登録します)
                 </legend>
                 <!-- 氏名 -->
-                <div class="form-group" th:object="${insertAdministratorForm}">
+                <div class="form-group">
                   <div class="row">
                     <div class="col-sm-12">
                       <label for="name"> 氏名: </label>
@@ -77,10 +77,10 @@
                   </div>
                 </div>
                 <!-- メールアドレス -->
-                <div class="form-group" th:object="${insertAdministratorForm}">
+                <div class="form-group">
                   <div class="row">
                     <div class="col-sm-12">
-
+                      <p th:if="${errorMessage}" th:text="${errorMessage}"class="alert alert-danger"></p>
                       <label for="mailAddress"> メールアドレス: </label>
                       <label
                         th:errors="*{mailAddress}"
@@ -102,7 +102,7 @@
                   </div>
                 </div>
                 <!-- パスワード -->
-                <div class="form-group" th:object="${insertAdministratorForm}">
+                <div class="form-group">
                   <div class="row">
                     <div class="col-sm-12">
                       <label for="password"> パスワード: </label>
@@ -123,8 +123,32 @@
                         value="xxxxxxxx"
                       />
                     </div>
+                <!-- 確認用パスワード -->
+                <div class="form-group">
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <label for="password"> 確認用パスワード: </label>
+                        <span
+                          th:if="${confirm_errorMessage}"
+                          th:text="${confirm_errorMessage}"
+                          class="error-messages"
+                        ></span>
+                      <input
+                        type="password"
+                        name="confirmation_password"
+                        id="password"
+                        class="form-control"
+                        placeholder="confirmation_password"
+                        th:field="*{confirmPassword}"
+                        th:errorclass="error-input"
+                        value="xxxxxxxx"
+                      />
+                    </div>
                   </div>
                 </div>
+                </div>
+              </div>
+              
                 <!-- 登録ボタン -->
                 <div class="form-group">
                   <div class="row">
