@@ -49,28 +49,35 @@
             >
               <fieldset>
                 <legend>ログイン</legend>
-                <div class="form-group">
+                <!-- <div class="form-group">
                   <div th:if="${errorMessage}" class="alert alert-danger">
                     <p th:text="${errorMessage}">
                       メールアドレスまたはパスワードが間違っています
                     </p>
                   </div>
-                </div>
-                <div class="form-group">
+                </div> -->
+                <div class="form-group" th:object="${loginForm}">
+                  <!-- <p th:if="${errorMessage}" th:text="${name}"></p> -->
                   <label for="mailAddress">メールアドレス:</label>
+                  <span th:if="${#fields.hasErrors('mailAddress')}" th:errors="*{mailAddress}" class="error-messages">error</span>
                   <input
                     type="text"
                     name="mailAddress"
+                    th:field="*{mailAddress}"
+                    th:text="${mail}"
                     id="mailAddress"
                     class="form-control"
                     placeholder="Email"
                   />
                 </div>
-                <div class="form-group">
+                <div class="form-group" th:object="${loginForm}">
                   <label for="inputPassword">パスワード:</label>
+                  <p th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="error-messages">error</p>
                   <input
                     type="password"
                     name="password"
+                    th:field="*{password}"
+                    th:text="${pass}"
                     id="inputPassword"
                     class="form-control"
                     placeholder="Password"
