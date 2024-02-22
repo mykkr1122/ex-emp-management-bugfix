@@ -22,6 +22,8 @@ import com.example.service.AdministratorService;
 
 import jakarta.servlet.http.HttpSession;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 /**
  * 管理者情報を操作するコントローラー.
  * 
@@ -37,6 +39,7 @@ public class AdministratorController {
 
 	@Autowired
 	private HttpSession session;
+
 
 	/**
 	 * 使用するフォームオブジェクトをリクエストスコープに格納する.
@@ -82,10 +85,11 @@ public class AdministratorController {
 	,BindingResult insertBindingResult
 	,RedirectAttributes inserRedirectAttributes
 	,Model model) {
+		
 		String mailAddress=insertAdministratorForm.getMailAddress();
 		String password=insertAdministratorForm.getPassword();
 		String confirmPassword=insertAdministratorForm.getConfirmPassword();
-
+		
 		//入力値にエラーがある場合、エラーメッセージを表示
 		if (insertBindingResult.hasErrors()) {
 			return "administrator/insert";
@@ -100,13 +104,21 @@ public class AdministratorController {
 			model.addAttribute("confirm_errorMessage", "パスワードが一致しません");
 			return "administrator/insert";
 		}
-
+		
 		Administrator administrator = new Administrator();
+		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+		// パスワードをハッシュ化
+		String hashedPassword = passwordEncoder.encode(password);
+		
 		// フォームからドメインにプロパティ値をコピー
 		BeanUtils.copyProperties(insertAdministratorForm, administrator);
+		administrator.setPassword(hashedPassword);
+		// ハッシュ化したパスワードでAdministratorを保存
 		administratorService.insert(administrator);
 		return "redirect:/";
 	}
+
+
 
 
 

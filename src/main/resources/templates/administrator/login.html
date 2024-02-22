@@ -44,9 +44,12 @@
 
             <form
               method="post"
+              th:method="POST"
+              class="hoge"
               action="../employee/list.html"
               th:action="@{/login}"
             >
+              <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
               <fieldset>
                 <legend>ログイン</legend>
                 <!-- <div class="form-group">
