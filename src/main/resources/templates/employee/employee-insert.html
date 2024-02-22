@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ja" 
+xmlns:th="http://www.thymeleaf.org" 
+xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>従業員管理システム</title>
+</head>
+<body>
+    <p>従業員情報登録画面</p>
+
+    <form 
+        action="list.html"
+        th:action="@{/employee/employeeInsert}"
+        method="post"
+        th:object="${insertEmployeeForm}">
+        <!-- 従業員の情報を登録 -->
+        <input type="hidden"
+        name="id"
+        th:field="*{id}"
+        value="${}">
+
+        <p>名前：</p>
+        <input type="text" name="name" th:field="*{name}">
+        <p>写真：</p>
+        <input type="file" name="image" th:field="*{image}">
+        <p>性別：</p>
+        <input type="radio" name="gender" value="男性" checked>男性
+        <input type="radio" name="gender" value="女性" >女性
+        <p>入社日：</p>
+        <input type="date" name="hireDate" th:field="*{hireDate}">
+        <p>メールアドレス：</p>
+        <input type="email" name="mailAddress" th:field="*{mailAddress}">
+        <p>郵便番号：</p>
+        <input type="text" id="zipcode" size="7" th:field="*{zipcode}"/>
+        <button id="get_address_btn" type="button">住所取得</button>
+
+        <p>住所：</p>
+        <input type="text" name="address" id="address" th:field="*{address}">
+
+        <p>電話番号：</p>
+        <input type="tel" name="telephone" th:field="*{telephone}">
+        <p>給料：</p>
+        <input type="number" name="salary" th:field="*{salary}">円
+        <p>特性：</p>
+        <input type="text" name="characteristics" th:field="*{characteristics}">
+        <p>扶養人数</p>
+        <input type="number" name="dependentsCount" th:field="*{dependentsCount}">人
+
+        <div class="form-group">
+            <div class="row">
+              <div class="col-sm-12">
+                <button type="submit" class="btn btn-primary" id="insert_btn">
+                  登録
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+          <script src="../../static/js/bootstrap.min.js"></script>
+    </form>
+
+</body>
+</html>

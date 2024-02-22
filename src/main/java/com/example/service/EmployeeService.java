@@ -19,6 +19,13 @@ import com.example.repository.EmployeeRepository;
 @Transactional
 public class EmployeeService {
 
+	/*
+	 * JUnitでテストするためにリポジトリをフィールドに持つ
+	 */
+	public EmployeeService(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
+    }
+
 	@Autowired
 	private EmployeeRepository employeeRepository;
 
@@ -59,5 +66,12 @@ public class EmployeeService {
 	public List<Employee> search(String name) {
 		List<Employee> employeeList = employeeRepository.findByName(name);
 		return employeeList;
+	}
+
+	/*
+	 * 従業員情報を登録します.
+	 */
+	public void insert(Employee employee) {
+		employeeRepository.insert(employee);
 	}
 }

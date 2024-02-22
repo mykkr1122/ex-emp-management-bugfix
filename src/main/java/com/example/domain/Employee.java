@@ -22,7 +22,7 @@ public class Employee {
 	/** メールアドレス */
 	private String mailAddress;
 	/** 郵便番号 */
-	private String zipCode;
+	private String zipcode;
 	/** 住所 */
 	private String address;
 	/** 電話番号 */
@@ -49,7 +49,7 @@ public class Employee {
 	 * @param gender          性別
 	 * @param hireDate        入社日
 	 * @param mailAddress     メールアドレス
-	 * @param zipCode         郵便番号
+	 * @param zipcode         郵便番号
 	 * @param address         住所
 	 * @param telephone       電話番号
 	 * @param salary          給料
@@ -57,7 +57,7 @@ public class Employee {
 	 * @param dependentsCount 扶養人数
 	 */
 	public Employee(Integer id, String name, String image, String gender, Date hireDate, String mailAddress,
-			String zipCode, String address, String telephone, Integer salary, String characteristics,
+			String zipcode, String address, String telephone, Integer salary, String characteristics,
 			Integer dependentsCount) {
 		super();
 		this.id = id;
@@ -66,7 +66,7 @@ public class Employee {
 		this.gender = gender;
 		this.hireDate = hireDate;
 		this.mailAddress = mailAddress;
-		this.zipCode = zipCode;
+		this.zipcode = zipcode;
 		this.address = address;
 		this.telephone = telephone;
 		this.salary = salary;
@@ -122,12 +122,12 @@ public class Employee {
 		this.mailAddress = mailAddress;
 	}
 
-	public String getZipCode() {
-		return zipCode;
+	public String getZipcode() {
+		return zipcode;
 	}
 
-	public void setZipCode(String zipCode) {
-		this.zipCode = zipCode;
+	public void setZipcode(String zipcode) {
+		this.zipcode = zipcode;
 	}
 
 	public String getAddress() {
@@ -173,7 +173,7 @@ public class Employee {
 	@Override
 	public String toString() {
 		return "Employee [id=" + id + ", name=" + name + ", image=" + image + ", gender=" + gender + ", hireDate="
-				+ hireDate + ", mailAddress=" + mailAddress + ", zipCode=" + zipCode + ", address=" + address
+				+ hireDate + ", mailAddress=" + mailAddress + ", zipcode=" + zipcode + ", address=" + address
 				+ ", telephone=" + telephone + ", salary=" + salary + ", characteristics=" + characteristics
 				+ ", dependentsCount=" + dependentsCount + "]";
 	}

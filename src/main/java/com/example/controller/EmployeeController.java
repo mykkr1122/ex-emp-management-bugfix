@@ -1,6 +1,8 @@
 package com.example.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.Employee;
+import com.example.form.InsertEmployeeForm;
 import com.example.form.UpdateEmployeeForm;
 import com.example.service.EmployeeService;
 
@@ -107,7 +110,9 @@ public class EmployeeController {
 	@GetMapping("/search")
 	public String search(String name, Model model) {
 		List<Employee> employeeList = new ArrayList<>();
+		// nameがnullまたは空文字の場合は全件検索を行う
 		if (name !=null && !name.equals("")) {
+			// 曖昧検索を行う
 			employeeList = employeeService.search(name);
 			if (employeeList.isEmpty()){
 				model.addAttribute("notExistError", "該当する従業員が存在しませんでした。");
@@ -118,5 +123,54 @@ public class EmployeeController {
 		}
 		model.addAttribute("employeeList", employeeList);
 		return "employee/list";
+	}
+
+	/////////////////////////////////////////////////////
+	// ユースケース：従業員情報を登録する
+	/////////////////////////////////////////////////////
+	/*
+	 * 従業員登録画面を出力します.
+	 */
+	@GetMapping("/toEmployeeInsert")
+	public String toInsert(InsertEmployeeForm insertEmployeeForm,Model model) {
+		return "employee/employee-insert";
+	}
+
+	/*
+	 * 従業員情報を登録します.
+	 */
+	@PostMapping("/employeeInsert")
+	public String insert(@Validated InsertEmployeeForm insertEmployeeForm
+		, BindingResult inserBindingResult
+		, Model model) {
+		if (inserBindingResult.hasErrors()) {
+			return showList(model);
+		}
+
+		Employee employee = new Employee();
+
+		String stringDate=insertEmployeeForm.getHireDate();
+		Date date = null;
+		SimpleDateFormat fortmatter = new SimpleDateFormat("yyyy年MM月dd日");
+		try {
+			date=fortmatter.parse(stringDate);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		employee.setName(insertEmployeeForm.getName());
+		employee.setImage(insertEmployeeForm.getImage());
+		employee.setGender(insertEmployeeForm.getGender());
+		employee.setHireDate(date);
+		employee.setMailAddress(insertEmployeeForm.getMailAddress());
+		employee.setZipcode(insertEmployeeForm.getZipcode());
+		employee.setAddress(insertEmployeeForm.getAddress());
+		employee.setTelephone(insertEmployeeForm.getTelephone());
+		employee.setSalary(Integer.parseInt(insertEmployeeForm.getSalary()));
+		employee.setCharacteristics(insertEmployeeForm.getCharacteristics());
+		employee.setDependentsCount(Integer.parseInt(insertEmployeeForm.getDependentsCount()));
+
+		employeeService.insert(employee);
+		return "redirect:/employee/showList";
 	}
 }
