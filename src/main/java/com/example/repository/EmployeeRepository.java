@@ -32,7 +32,7 @@ public class EmployeeRepository {
 		employee.setGender(rs.getString("gender"));
 		employee.setHireDate(rs.getDate("hire_date"));
 		employee.setMailAddress(rs.getString("mail_address"));
-		employee.setZipCode(rs.getString("zip_code"));
+		employee.setZipcode(rs.getString("zip_code"));
 		employee.setAddress(rs.getString("address"));
 		employee.setTelephone(rs.getString("telephone"));
 		employee.setSalary(rs.getInt("salary"));
@@ -93,4 +93,14 @@ public class EmployeeRepository {
 		List<Employee> employeeNameList = template.query(sql,param, EMPLOYEE_ROW_MAPPER);
 		return employeeNameList;
 	}
+
+	/*
+	 * 従業員情報を登録するメソッド
+	 */
+
+	 public void insert(Employee employee) {
+		SqlParameterSource param = new BeanPropertySqlParameterSource(employee);
+		String insertSql = "INSERT INTO employees(id,name,image,gender,hire_date,mail_address,zip_code,address,telephone,salary,characteristics,dependents_count) VALUES(:id,:name,:image,:gender,:hireDate,:mailAddress,:zipcode,:address,:telephone,:salary,:characteristics,:dependentsCount);";
+		template.update(insertSql, param);
+	 }
 }

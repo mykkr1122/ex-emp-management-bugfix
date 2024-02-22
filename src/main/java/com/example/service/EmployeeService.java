@@ -67,4 +67,11 @@ public class EmployeeService {
 		List<Employee> employeeList = employeeRepository.findByName(name);
 		return employeeList;
 	}
+
+	/*
+	 * 従業員情報を登録します.
+	 */
+	public void insert(Employee employee) {
+		employeeRepository.insert(employee);
+	}
 }
